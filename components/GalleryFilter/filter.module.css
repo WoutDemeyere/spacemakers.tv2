@@ -1,0 +1,64 @@
+.o_button_reset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    /* width: auto; */
+    overflow: visible;
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+}
+
+.project_filter_container {
+    display: inline-block;
+
+    zoom: 1; 
+    width: 100vw;
+    padding: var(--global-whitespace-xxs);
+    /* background-color: #b5b5b5; */
+
+    /* display: flex; */
+    /* flex-direction: row;
+    align-items: center;
+    justify-content: flex-end; */
+    padding-right: var(--global-whitespace-md);
+    border-bottom: 1px solid #000000;
+    margin-bottom: var(--global-whitespace-xs);
+    text-align: right;
+}
+
+.project_filter_item {
+    width: auto;
+    margin: var(--filter-item-margin) 0;
+    padding: 0 10px;
+    border: 1px solid #000000;
+    border-radius: 2px;
+    margin-right: var(--global-whitespace-sm);
+    transition: all 0.2s ease-in-out;
+}
+
+.project_filter_item:hover {
+    background-color: #d6d6d6;
+    /* cursor: pointer; */
+}
+
+.selected {
+    background-color: #000000;
+    color: #ffffff;
+}
+.selected:hover {
+    background-color: #000000;
+    color: #ffffff;
+}

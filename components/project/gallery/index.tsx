@@ -7,9 +7,14 @@ import { ProjectType } from '../../../types/types';
 
 type GalleryProps = {
   projects: ProjectType[];
+  selectedTags: string[];
 }
 
-const Gallery = ({ projects }: GalleryProps) => {
+const Gallery = ({ projects, selectedTags }: GalleryProps) => {
+
+  let filteredProjects = projects.filter((project) => {
+    return selectedTags.every((tag) => project.tags.includes(tag));
+  });
 
   console.log(projects);
 
@@ -23,11 +28,11 @@ const Gallery = ({ projects }: GalleryProps) => {
   };
 
   //Sort projects by date
-  projects = projects.sort(
+  filteredProjects = filteredProjects.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
-  const project_list = projects.map((project: ProjectType) => {
+  const project_list = filteredProjects.map((project: ProjectType) => {
     if (project.thumbnail_url && project.id && project.title) {
       return <Thumbnail project={project} handleOpen={handleOpen} />
     }

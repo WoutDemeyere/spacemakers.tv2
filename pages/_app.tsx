@@ -18,15 +18,23 @@ export default function App ({ Component, pageProps }: AppProps) {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     fetch(`/api/getSiteData`)
       .then(response => response.json())
       .then(data => {
-        setProjects(data["data"]);
-        setTags(data['tags']);
+        if (isMounted) {
+          setProjects(data["data"]);
+          setTags(data['tags']);
+        }
       })
       .catch(error => {
         console.error("Error fetching data:", error);
-      })
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
 

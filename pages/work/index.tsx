@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Gallery from "../../components/project/gallery";
+import GalleryFilter from "../../components/GalleryFilter";
 import { ProjectType } from "../../types/types";
 
 interface WorkProps {
@@ -10,6 +11,11 @@ interface WorkProps {
 
 const Work = (props: WorkProps) => {
   const [projects, setProjects] = useState<ProjectType[]>(props.projects);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagChange = (_tags: string[]) => {
+      setSelectedTags(_tags);
+  }
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -27,7 +33,12 @@ const Work = (props: WorkProps) => {
     }
   }, [projects]);
 
-  return <Gallery projects={projects}></Gallery>;
+  return (
+    <React.Fragment>
+      <GalleryFilter tags={props.tags} handleTagsChange={handleTagChange}></GalleryFilter>
+      <Gallery projects={projects} selectedTags={selectedTags}></Gallery>
+    </React.Fragment>
+  );
 };
 
 export default Work;

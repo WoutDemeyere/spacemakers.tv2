@@ -30,7 +30,7 @@ export default function Page (props: PageProps) {
       }
     };
 
-    if (slug) {
+    if (slug && !project) {
       const projectData = router.query.project ? JSON.parse(router.query.project as string) : null;
       if (projectData) {
         setProject(projectData);
@@ -38,7 +38,7 @@ export default function Page (props: PageProps) {
         fetchProject(slug);
       }
     }
-  }, [slug]);
+  }, [slug, project]);
 
   // Render loading state if slug or project is not yet loaded
   if (!slug || !project) {
