@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://spacemakers.tv
+
+# Sitemaps
+Sitemap: https://spacemakers.tv/sitemap.xml

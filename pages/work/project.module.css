@@ -1,0 +1,161 @@
+.modal {
+	background-color: #ffffffce;
+	padding: 0;
+	/* background-color: #b44848; */
+	overflow: hidden;
+}
+
+.modal_container {
+	width: 100%;
+	height: 100vh;
+	/* background-color: #bababa; */
+	display: flex;
+	flex-direction: row;
+}
+
+/* MODAL TEXT */
+
+.modal_text_container {
+	position: relative;
+	width: 50%;
+	height: 100%;
+	/* background-color: #a7a7a7; */
+	padding: 0.5rem;
+}
+
+.modal_text_container p {
+	margin-bottom: var(--global-whitespace-lg);
+}
+
+.modal_title {
+	font-size: 3rem;
+	font-weight: bold;
+	margin-bottom: calc(var(--global-whitespace-xl) * 2);
+}
+
+/* MODAL images */
+.modal_images_container {
+	/* padding: 0 var(--global-whitespace-sm); */
+	/* background-color: #ffffffce; */
+	flex: 1;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow-y: scroll;
+	/* background-color: #777777; */
+}
+
+.photo_container {
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+}
+
+.modal_img {
+	margin-bottom: var(--global-whitespace-md);
+	width: 100%;
+	object-fit: cover;
+	height: auto;
+}
+
+.modal_img:last-child {
+	margin: 0;
+}
+
+.back_button {
+	font-size: 2rem;
+	cursor: pointer;
+	margin: var(--global-whitespace-sm);
+}
+
+@media only screen and (max-width: 1200px) {
+	.modal {
+		overflow: unset;
+	}
+	.modal_container {
+		flex-direction: column;
+	}
+
+	.modal_text_container {
+		width: 100%;
+		/* height: 60%; */
+		flex: 0;
+	}
+
+	.modal_title {
+		font-size: 2rem;
+		margin-bottom: calc(var(--global-whitespace-xl));
+	}
+
+	.modal_images_container {
+		flex-direction: row;
+		height: 100%;
+		width: 100%;
+		overflow-y: scroll;
+		/* background-color: #898989; */
+	}
+
+	.modal_img {
+		margin-right: var(--global-whitespace-sm);
+		width: 90%;
+		height: 300px;
+		height: auto;
+		/* height: 100%; */
+		/* width: auto; */
+		/* width: 60%; */
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.modal_img {
+		margin-right: var(--global-whitespace-sm);
+		width: 90%;
+		height: 200px;
+		/* height: 100%; */
+		/* width: auto; */
+		/* width: 60%; */
+	}
+}
+
+@media only screen and (max-width: 425px) {
+	.modal_text_container {
+		padding: var(--global-whitespace-xl);
+	}
+}
+
+/* Add these styles to your CSS file */
+
+/* Styles for video elements */
+.modal_video {
+	width: 100%;
+	object-fit: cover;
+	margin-bottom: var(--global-whitespace-md);
+}
+
+.modal_video.portrait {
+	width: 50%;
+}
+
+/* Update these media queries to handle video sizing on smaller screens */
+@media only screen and (max-width: 1200px) {
+	.modal_video {
+		width: 90%;
+	}
+
+	.modal_video.portrait {
+		width: 45%;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.modal_video {
+		width: 90%;
+		height: 200px;
+	}
+
+	.modal_video.portrait {
+		width: 45%;
+		height: auto;
+	}
+}
