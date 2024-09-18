@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { EffectFade, Autoplay } from "swiper/modules";
-// import Slogan from "../components/Slogan";
+import Slogan from "../components/Slogan";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -10,11 +10,12 @@ import "swiper/css/effect-fade";
 import styles from "./Home.module.css";
 
 const images: string[] = [
+  "/images/landing/cotf.jpg",
+  "/images/landing/bbr.jpg",
 	"/images/landing/asa_moto.jpeg",
 	"/images/landing/ccd.jpg",
 	"/images/landing/obscuur.jpg",
 	"/images/landing/nye.jpg",
-	"/images/landing/technology.jpg",
 ];
 
 const Home: React.FC = () => {
@@ -28,9 +29,9 @@ const Home: React.FC = () => {
 
 	return (
 		<React.Fragment>
-			{/* <div className={styles.slogan_container}>
+			<div className={styles.slogan_container}>
 				<Slogan />
-			</div> */}
+			</div>
 
 			<Swiper
 				loop={true}
