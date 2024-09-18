@@ -56,6 +56,21 @@ export default function App ({ Component, pageProps }: AppProps) {
         <meta property="og:description" content={siteConfig.description} />
         <meta property="og:image" content="https://spacemakers.tv/logo.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
+
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Spacemakers.TV",
+            "url": "https://spacemakers.tv",
+            "logo": "https://spacemakers.tv/logo.jpg",
+            "sameAs": [
+              "https://www.facebook.com/spacemakerstv",
+              "https://www.instagram.com/spacemakers_/",
+              "https://www.linkedin.com/company/spacemakerstv"
+            ]
+          })}
+        </script>
       </Head>
       <HeaderMenu />
       <Component {...pageProps} projects={projects} tags={tags} />
