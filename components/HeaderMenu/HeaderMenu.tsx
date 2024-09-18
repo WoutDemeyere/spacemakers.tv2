@@ -78,13 +78,15 @@ const HeaderMenu = () => {
     <header className={classes.header}>
       <Container size="md">
         <div className={classes.inner}>
-          <img
-            className={classes.header__logo}
-            src="/gifs/spcmkrs_logo.gif"
-            alt="logo"
-            onClick={goHome}
-          />
-          <Group gap={5} visibleFrom="sm">
+          <div className={classes.logoContainer}>
+            <img
+              className={classes.header__logo}
+              src="/gifs/spcmkrs_logo.gif"
+              alt="logo"
+              onClick={goHome}
+            />
+          </div>
+          <Group gap={5} visibleFrom="sm" className={classes.linksContainer}>
             {items}
           </Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />

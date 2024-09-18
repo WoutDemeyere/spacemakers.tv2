@@ -11,7 +11,8 @@ import styles from "./Home.module.css";
 
 const images: string[] = [
   "/images/landing/cotf.jpg",
-  "/images/landing/bbr.jpg",
+  "/images/landing/ion.jpg",
+  "/images/landing/bbr_opt_2.jpg",
 	"/images/landing/asa_moto.jpeg",
 	"/images/landing/ccd.jpg",
 	"/images/landing/obscuur.jpg",

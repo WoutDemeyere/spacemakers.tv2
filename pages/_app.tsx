@@ -48,6 +48,14 @@ export default function App ({ Component, pageProps }: AppProps) {
         />
         <link rel="icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
+
+        <meta name="description" content={siteConfig.description} />
+        <meta name="keywords" content={siteConfig.keywords} />
+
+        <meta property="og:title" content={siteConfig.name} />
+        <meta property="og:description" content={siteConfig.description} />
+        <meta property="og:image" content="https://spacemakers.tv/logo.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <HeaderMenu />
       <Component {...pageProps} projects={projects} tags={tags} />

@@ -3,6 +3,7 @@ export type SiteConfig = {
   description: string;
   url: string;
   logo: string;
+  keywords: string;
 };
 
 export type LinkType = {

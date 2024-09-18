@@ -44,3 +44,13 @@
   font-size: 1.5rem; /* Adjust the size as needed */
   padding: 10px 0;   /* Optional: Add padding for better touch targets */
 }
+
+.logoContainer {
+  flex: 1;
+}
+
+.linksContainer {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
