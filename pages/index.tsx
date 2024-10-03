@@ -12,13 +12,13 @@ import "swiper/css/effect-fade";
 import styles from "./Home.module.css";
 
 const images: string[] = [
-	"/images/landing/cotf.jpg",
-	"/images/landing/ion.jpg",
-	"/images/landing/bbr_opt_2.jpg",
-	"/images/landing/asa_moto.jpeg",
-	"/images/landing/ccd.jpg",
-	"/images/landing/obscuur.jpg",
-	"/images/landing/nye.jpg",
+	"/images/landing/cotf.webp",
+	"/images/landing/ion.webp",
+	"/images/landing/bbr_opt_2.webp",
+	"/images/landing/asa_moto.webp",
+	"/images/landing/ccd.webp",
+	"/images/landing/obscuur.webp",
+	"/images/landing/nye.webp",
 ];
 
 const Home: React.FC = () => {
