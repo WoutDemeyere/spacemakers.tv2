@@ -7,6 +7,7 @@ import { GetServerSideProps } from "next";
 const About = () => {
 	return (
 		<div>
+      <h1 style={{ position: "absolute", left: "-9999px" }}>Spacemakers About Page info</h1>
 			<div className={styles.about_container}>
 				<Container className={styles.about_image}>
 					<h3>THIS IS</h3>

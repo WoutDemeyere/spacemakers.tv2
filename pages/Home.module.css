@@ -11,7 +11,10 @@
 	object-fit: cover;
 }
 
-
+.hidden {
+	position: absolute;
+	left: -9999px;
+}
 
 .slogan_container {
 	position: absolute;
