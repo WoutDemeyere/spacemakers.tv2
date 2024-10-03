@@ -1,5 +1,6 @@
 name: Azure Static Web Apps CI/CD
 
+
 on:
   push:
     branches:
@@ -8,6 +9,12 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+
+env:
+  APP_LOCATION: "/" # location of your client code
+  API_LOCATION: "" # location of your api source code - optional
+  AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_BEACH_0D4827803 }} # secret containing deployment token for your static web app
+
 
 jobs:
   build_and_deploy_job:
@@ -19,19 +26,42 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - name: Build And Deploy
-        id: builddeploy
+            # Set up Node.js and cache installed NPM packages
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          # If you use `yarn` or `pnpm`, you will have to adjust this setting.
+          # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-data
+          cache: "npm"
+      # Cache Next.js build outputs (If you aren't using Next.js, you can replace `.next/cache` with your framework's cache directory)
+      - uses: actions/cache@v3
+        with:
+          path: |
+              ${{ github.workspace }}/.next/cache
+          key: |
+              ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+              ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
+    
+      - name: Install packages
+        run: npm ci
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        id: deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_BEACH_0D4827803 }}
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing api token for app
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          skip_app_build: true
+          ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: ".next" # Built app content directory - optional
+          app_location: ${{ env.APP_LOCATION }}
+          api_location: ${{ env.API_LOCATION }}
           ###### End of Repository/Build Configurations ######
+      
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
