@@ -30,10 +30,10 @@ const Home: React.FC = () => {
 
 	return (
 		<React.Fragment>
+			<h1 style={{ position: "absolute", left: "-9999px" }}>Spacemakers</h1>
 			<div className={styles.slogan_container}>
 				<Slogan />
 			</div>
-
 			<Swiper
 				allowSlideNext
 				loop={true}
@@ -67,9 +67,9 @@ const Home: React.FC = () => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	// Fetch your data here
-	const title = "spacemakers.tv";
+	const title = "Spacemakers";
 	const description =
-		"With Spacemakers we have been experimenting with light, image and sound in public space for about 10 years now. Through different art forms we try to show a space in another dimension. Our portfolio includes various exhibitions, video projections, stage design, light constructions, (interactive) installations, festivals, museums and more.";
+		"With Spacemakers we have been experimenting with light, image and sound in public space for 10 years. Through different art forms we try to show a space in another dimension. Our portfolio includes various exhibitions, video projections, stage design, light constructions, (interactive) installations, festivals, museums and more.";
 
 	return {
 		props: {

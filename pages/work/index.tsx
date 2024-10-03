@@ -36,6 +36,7 @@ const Work = (props: WorkProps) => {
 
 	return (
 		<React.Fragment>
+      <h1 style={{ position: "absolute", left: "-9999px" }}>Spacemakers Work Portfolio</h1>
 			<GalleryFilter
 				tags={props.tags}
 				handleTagsChange={handleTagChange}></GalleryFilter>
