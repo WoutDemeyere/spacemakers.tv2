@@ -15,7 +15,7 @@ const Thumbnail = ({ project, handleOpen }: ThumbnailProps) => {
 
   return (
     <div className={classes.project_container} onClick={() => handleOpen(project)}>
-      <Image src={project.thumbnail_url} className={classes.project_image}
+      <Image src={project.thumbnail} className={classes.project_image}
         alt={project.title}
         width={960}
         height={540}

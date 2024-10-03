@@ -50,7 +50,7 @@ export default function Page (props: PageProps) {
   };
 
   const renderImages = () => {
-    return project.image_links.map((image, index) => (
+    return project.images.map((image, index) => (
       image && (
         <Carousel.Slide key={index}>
           <img
@@ -70,7 +70,7 @@ export default function Page (props: PageProps) {
         <div className={styles.modal_text_container}>
           <h1 className={styles.modal_title}>{project.title}</h1>
           <p className={styles.modal_description}>
-            {parse(project.description)}
+            {parse(project.content)}
           </p>
         </div>
 
