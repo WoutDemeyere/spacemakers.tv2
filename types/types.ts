@@ -13,12 +13,18 @@ export type LinkType = {
 };
 
 export type ProjectType = {
-  id: string;
-  thumbnail_url: string;
-  title: string;
-  description: string;
+  collectionId: string;
+  collectionName: string;
+  content: string;
+  created: string;
   date: string;
+  id: string;
+  images: string[];
+  page_id: string;
+  show: boolean;
   tags: string[];
-  image_links: string[];
-  video_links: string[];
+  thumbnail: string;
+  title: string;
+  updated: string;
+  videos: string[];
 };

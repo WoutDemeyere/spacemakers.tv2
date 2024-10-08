@@ -1,20 +1,23 @@
-import axios from "axios";
+import PocketBase from 'pocketbase';
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+// const pb = new PocketBase('http://127.0.0.1:8090');
+
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const pb = new PocketBase(baseUrl);
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query; // Extract project ID from query parameters
-  const endpoint = `https://storage.googleapis.com/spacemakers_site/_site_data`;
+
+  const record = await pb.collection('projects').getFirstListItem(`page_id=${id}`, {});
 
   try {
-    const response = await axios.get(endpoint);
-    const projects = response.data.data;
-    const project = projects.find((project: any) => project.id === id);
 
-    if (project) {
-      return res.status(200).json(project);
-    } else {
+    if(!record) {
       return res.status(404).json({ status: "Error", message: "Project not found" });
     }
+
+    return res.status(200).json(record);
   } catch (error: any) {
     console.error("Error fetching report data:", error);
 

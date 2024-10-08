@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { SimpleGrid } from '@mantine/core';
 import Thumbnail from '../thumbnail';
-import { ProjectType } from '../../../types/types';
+import type { ProjectType } from '../../../types/types';
 
 type GalleryProps = {
   projects: ProjectType[];
@@ -12,11 +12,13 @@ type GalleryProps = {
 
 const Gallery = ({ projects, selectedTags }: GalleryProps) => {
 
+  if (!projects || projects.length === 0) {
+    return;
+  }
+
   let filteredProjects = projects.filter((project) => {
     return selectedTags.every((tag) => project.tags.includes(tag));
   });
-
-  console.log(projects);
 
   const router = useRouter();
 
@@ -33,8 +35,8 @@ const Gallery = ({ projects, selectedTags }: GalleryProps) => {
   );
 
   const project_list = filteredProjects.map((project: ProjectType) => {
-    if (project.thumbnail_url && project.id && project.title) {
-      return <Thumbnail project={project} handleOpen={handleOpen} />
+    if (project.thumbnail && project.id && project.title) {
+      return <Thumbnail project={project} handleOpen={handleOpen} key={project.id} />
     }
     return null;
   }).filter(project => project !== null);

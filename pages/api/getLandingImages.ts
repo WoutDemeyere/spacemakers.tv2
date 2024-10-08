@@ -4,23 +4,13 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const pb = new PocketBase(baseUrl);
 
-pb.autoCancellation(false);
-
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
   try {
-    const projects = await pb.collection('projects').getFullList({
-      sort: '-created',
+    const images = await pb.collection('Landing_page_images').getFullList({
+      sort: '+ORDER',
     });
-
-    if (!projects) {
-      return res.status(404).json({
-        status: "Error",
-        message: "No projects found",
-      });
-    }
-    
-    const filteredProjects = projects.filter((project: any) => project.show !== false);
-    return res.status(200).json(filteredProjects);
+    const filteredImages = images.filter((image: any) => image.show !== false);
+    return res.status(200).json(filteredImages);
   } catch (error: any) {
     console.error("Error fetching report data:", error);
 

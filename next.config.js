@@ -4,7 +4,7 @@ const nextConfig = {
   // output: 'export',
   reactStrictMode: true,
   images: {
-    domains: [ "storage.googleapis.com" ],
+    domains: [ "storage.googleapis.com", "127.0.0.1", "admin.spacemakers.tv" ],
   },
 }
 
