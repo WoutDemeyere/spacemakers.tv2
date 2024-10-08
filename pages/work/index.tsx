@@ -3,8 +3,9 @@ import Gallery from "../../components/project/gallery";
 import GalleryFilter from "../../components/GalleryFilter";
 import type { ProjectType } from '../../types/types';
 import { LoadingOverlay } from "@mantine/core";
+import { API_BASE_URL } from '../../config/vars';
 
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const baseUrl = API_BASE_URL;
 
 interface WorkProps {
   projects: ProjectType[];

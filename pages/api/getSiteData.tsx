@@ -1,7 +1,8 @@
 import PocketBase from 'pocketbase';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { API_BASE_URL } from '../../config/vars';
 
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const baseUrl = API_BASE_URL;
 const pb = new PocketBase(baseUrl);
 
 pb.autoCancellation(false);
