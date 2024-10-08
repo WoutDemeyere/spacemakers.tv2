@@ -41,8 +41,8 @@ interface Image {
   url?: string;
 }
 
-// const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-const baseUrl = "http://127.0.0.1:8090";
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+// const baseUrl = "http://127.0.0.1:8090";
 
 const Home: React.FC = () => {
   const swiperRef = useRef<any | null>(null);

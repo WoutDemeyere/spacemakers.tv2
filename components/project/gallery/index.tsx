@@ -12,7 +12,7 @@ type GalleryProps = {
 
 const Gallery = ({ projects, selectedTags }: GalleryProps) => {
 
-  if (projects.length === 0 || !projects) {
+  if (!projects || projects.length === 0) {
     return;
   }
 
