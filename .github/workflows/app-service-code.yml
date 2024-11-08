@@ -1,13 +1,14 @@
-name: App Service Code
+name: Build and deploy Next.js app to Azure Web App
 
 on:
   push:
     branches:
-      - main
+      - main  
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: web-spacemakers-tv
+  APPLICATION_PUBLISH_PROFILE: ${{ secrets.PUBLISH_PROFILE }}
+  WEBAPP_NAME: "web-spacemakers-tv"
 
 jobs:
   build:
@@ -16,47 +17,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js version
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: "npm"
+          node-version: "20.x"
 
-      - name: npm install and build
+      - name: npm install, build, and test
         run: |
-          npm install --frozen-lockfile
+          npm install
           npm run build
-
-      - name: Copy static files
-        run: |
-          cp -R ./public ./.next/standalone/public
-          cp -R ./.next/static ./.next/standalone/.next/static
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: app
-          path: ./.next/standalone
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    environment:
-      name: production
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: app
+          mv ./build/static ./build/standalone/build
+          mv ./public ./build/standalone
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-name: ${{ env.WEBAPP_NAME }}
           slot-name: "Production"
-          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
-          package: .
+          publish-profile: ${{ env.APPLICATION_PUBLISH_PROFILE }}
+          package: ./build/standalone
