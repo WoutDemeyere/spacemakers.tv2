@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 443",
     "export": "next build && next export",
     "typecheck": "tsc --noEmit",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "generateSiteMap": "next-sitemap"
   },
   "dependencies": {
     "@mantine/carousel": "^7.12.2",
