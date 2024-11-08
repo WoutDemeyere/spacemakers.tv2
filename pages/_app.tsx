@@ -19,25 +19,25 @@ export default function App({
 	const [projects, setProjects] = useState([]);
 	const [tags, setTags] = useState([]);
 
-	useEffect(() => {
-		let isMounted = true;
+	// useEffect(() => {
+	// 	let isMounted = true;
 
-		fetch(`/api/getSiteData`)
-			.then((response) => response.json())
-			.then((data) => {
-				if (isMounted) {
-					setProjects(data["data"]);
-					setTags(data["tags"]);
-				}
-			})
-			.catch((error) => {
-				console.error("Error fetching data:", error);
-			});
+	// 	fetch(`/api/getSiteData`)
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			if (isMounted) {
+	// 				setProjects(data["data"]);
+	// 				setTags(data["tags"]);
+	// 			}
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error fetching data:", error);
+	// 		});
 
-		return () => {
-			isMounted = false;
-		};
-	}, []);
+	// 	return () => {
+	// 		isMounted = false;
+	// 	};
+	// }, []);
 
 	return (
 		<MantineProvider theme={theme}>

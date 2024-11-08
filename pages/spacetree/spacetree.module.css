@@ -1,0 +1,35 @@
+.spaceTreeButton {
+  background-color: white;
+  color: black;
+  width: 80px;
+  height: 80px;
+  border-radius: 2px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spaceTreeButton:disabled {
+  color: grey;
+}
+
+.spaceTreeButton:active {
+  color: black;
+  background-color: #c9c9c9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* For touch devices */
+@media (hover: none) {
+  .spaceTreeButton {
+    transition: background-color 0.2s ease;
+  }
+  
+  .spaceTreeButton:active {
+    transition: none; /* Instant feedback on press */
+    color: black;
+    background-color: #a7a7a7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+}
