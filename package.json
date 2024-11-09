@@ -1,11 +1,11 @@
 {
-  "name": "mantine-next-template",
+  "name": "spacemakers-tv2",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 8080",
+    "start": "node .next/standalone/server.js",
     "export": "next build && next export",
     "typecheck": "tsc --noEmit",
     "postbuild": "next-sitemap",
