@@ -34,10 +34,6 @@ const Work = (props: WorkProps) => {
 
         const data = await response.json();
 
-        console.log('data: ', data);
-
-
-
         const updatedProjects = data.map((project: ProjectType) => {
           project.thumbnail = `${baseUrl}/api/files/${project.collectionId}/${project.id}/${project.thumbnail}`;
           project.images = project.images?.map(
@@ -59,8 +55,6 @@ const Work = (props: WorkProps) => {
         });
 
         setTags(tempTags);
-
-        console.log('updatedProjects: ', updatedProjects);
         setProjects(updatedProjects);
       } catch (error) {
         console.error("Error fetching projects:", error);

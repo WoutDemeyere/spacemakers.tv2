@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./filter.module.css";
-import { Flex } from "@mantine/core";
+import { ActionIcon, Flex } from "@mantine/core";
+import { IconSquareX } from "@tabler/icons-react";
 
 interface ProjectFilterProps {
     tags: string[];
@@ -24,6 +25,11 @@ const ProjectFilter: React.FC<ProjectFilterProps> = ({ tags, handleTagsChange })
         handleTagsChange(updatedTags.length === tags.length || updatedTags.length === 0 ? [] : updatedTags);
     };
 
+    const clearSelection = () => {
+        setSelectedTags([]);
+        handleTagsChange([]);
+    };
+
     return (
         <Flex align="center" justify="end" gap="xs" h="xl" p="1rem">
             {tags.map((tag, index) => (
@@ -33,6 +39,9 @@ const ProjectFilter: React.FC<ProjectFilterProps> = ({ tags, handleTagsChange })
                     {tag}
                 </button>
             ))}
+            <ActionIcon onClick={clearSelection} className={styles.clear_button} variant="filled" color="black">
+                <IconSquareX />
+            </ActionIcon>
         </Flex>
     );
 };

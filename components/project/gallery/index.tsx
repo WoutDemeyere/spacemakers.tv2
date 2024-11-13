@@ -42,7 +42,7 @@ const Gallery = ({ projects, selectedTags }: GalleryProps) => {
   }).filter(project => project !== null);
 
   return (
-    <SimpleGrid cols={{ base: 1, sm: 1, lg: 2 }}>
+    <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
       {project_list}
     </SimpleGrid>)
 };
