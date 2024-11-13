@@ -46,15 +46,15 @@ const SpaceTree = () => {
   }, []);
 
   const buttons: ClipButton[] = [
-    { text: 'Clip 1', layerIndex: 1, clipIndex: 1 },
-    { text: 'Clip 2', layerIndex: 1, clipIndex: 2 },
-    { text: 'Clip 3', layerIndex: 1, clipIndex: 3 },
-    { text: 'Clip 4', layerIndex: 2, clipIndex: 1 },
-    { text: 'Clip 5', layerIndex: 2, clipIndex: 2 },
-    { text: 'Clip 6', layerIndex: 2, clipIndex: 3 },
-    { text: 'Clip 7', layerIndex: 3, clipIndex: 1 },
-    { text: 'Clip 8', layerIndex: 3, clipIndex: 2 },
-    { text: 'Clip 9', layerIndex: 3, clipIndex: 3 },
+    { text: 'STROBE', layerIndex: 1, clipIndex: 1 },
+    { text: 'FIRE', layerIndex: 1, clipIndex: 2 },
+    { text: 'SNOW', layerIndex: 1, clipIndex: 3 },
+    { text: 'LINE X', layerIndex: 2, clipIndex: 1 },
+    { text: 'LINE Y', layerIndex: 2, clipIndex: 2 },
+    { text: 'LINE Z', layerIndex: 2, clipIndex: 3 },
+    { text: 'RED HUE', layerIndex: 3, clipIndex: 1 },
+    { text: 'CHASE', layerIndex: 3, clipIndex: 2 },
+    { text: 'PARTY', layerIndex: 3, clipIndex: 3 },
   ];
 
   const executeRequest = (button: ClipButton) => {
@@ -109,9 +109,9 @@ const SpaceTree = () => {
     >
       {/* Header */}
       <Flex justify="space-between" align="flex-start" direction="column">
-        <Box style={{ width: '100%', backgroundColor: 'black', color: 'white', paddingLeft: '15px' }}>
+        {/* <Box style={{ width: '100%', backgroundColor: 'black', color: 'white', paddingLeft: '15px' }}>
           <Text style={{ ...textStyle }}>SPACEMAKERS</Text>
-        </Box>
+        </Box> */}
         <Flex direction="row" justify="space-between" align="center" style={{ backgroundColor: 'white', color: 'black', paddingLeft: '15px', paddingRight: '15px', width: '100%' }}>
           <Text style={{ ...textStyle, fontSize: '22px' }}>— SPACETREE</Text>
           <HelpPopover />
@@ -137,7 +137,7 @@ const SpaceTree = () => {
 
           <Flex direction="column" style={{ backgroundColor: 'black', color: 'black', padding: '30px', width: '100%' }}>
             <Text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' }}>BRIGHTNESS</Text>
-            <Slider color="white" value={sliderValue} onChange={setSliderValue} onChangeEnd={(value) => executeBrightnessRequest(value)} max={1} min={0} step={0.01} />
+            <Slider color="grey" value={sliderValue} onChange={setSliderValue} onChangeEnd={(value) => executeBrightnessRequest(value)} max={1} min={0} step={0.01} inverted />
           </Flex>
         </Flex>
       </Center>
