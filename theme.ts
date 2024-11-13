@@ -1,5 +1,7 @@
 import { createTheme } from '@mantine/core';
 
+import { basierSquare } from './styles/BasierFont';
+
 export const theme = createTheme({
-  fontFamily: 'Verdana, sans-serif',
+  fontFamily: basierSquare.style.fontFamily,
 });

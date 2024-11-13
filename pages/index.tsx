@@ -15,6 +15,7 @@ import "swiper/css/effect-fade";
 import styles from "./Home.module.css";
 
 import { API_BASE_URL } from '../config/vars';
+import { FooterSocial } from "@/components/FooterSocial/FooterSocial";
 
 
 // const images: string[] = [
@@ -122,6 +123,7 @@ const Home: React.FC = () => {
           );
         })}
       </Swiper>
+      <FooterSocial />
     </React.Fragment>
   );
 };
