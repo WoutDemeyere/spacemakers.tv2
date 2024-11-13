@@ -3,6 +3,7 @@ import React from "react";
 import { Container } from "@mantine/core";
 import styles from "./about.module.css";
 import { GetServerSideProps } from "next";
+import { FooterSocial } from "@/components/FooterSocial/FooterSocial";
 
 const About = () => {
 	return (
@@ -70,6 +71,7 @@ const About = () => {
 						generative art and so much more.{" "}
 					</Container>
 				</Container>
+        <FooterSocial />
 			</div>
 		</div>
 	);

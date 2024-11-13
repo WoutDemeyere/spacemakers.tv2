@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -12,6 +12,7 @@ import {
   Notification,
   Divider,
   Flex,
+  ActionIcon,
 } from "@mantine/core";
 import {
   IconMail,
@@ -21,10 +22,8 @@ import {
   IconCheck,
   IconX,
 } from "@tabler/icons-react";
-import { useState } from "react";
-
+import { notifications } from '@mantine/notifications';
 import styles from "./contact.module.css";
-
 import {
   FiInstagram,
   FiFacebook,
@@ -35,6 +34,7 @@ import {
   FiCreditCard,
 } from "react-icons/fi";
 import { GetServerSideProps } from "next";
+import { FooterSocial } from "@/components/FooterSocial/FooterSocial";
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -77,8 +77,7 @@ const ContactPage = () => {
   // Simulating form submission to an API
   const handleSubmit = async (values: typeof form.values) => {
     try {
-      // Example POST request to your API endpoint
-      const response = await fetch("https://example.com/api/contact", {
+      const response = await fetch("/api/postFormData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,11 +88,32 @@ const ContactPage = () => {
       if (response.ok) {
         setSubmitted(true);
         form.reset(); // Reset form after successful submission
+        notifications.show({
+          title: "Success",
+          message: "Form submitted successfully!",
+          color: "teal",
+          icon: <IconCheck size={18} />,
+          autoClose: 3000,
+        });
       } else {
         throw new Error("Failed to submit the form");
       }
     } catch (error) {
       setError("Failed to submit. Please try again later.");
+      notifications.show({
+        title: "Error",
+        message: "There was an error submitting the form!",
+        color: "red",
+        icon: <IconX size={18} />,
+        autoClose: false,
+      });
+      notifications.show({
+        title: "Error",
+        message: "You can send an email with your request to info@spacemakers.tv",
+        color: "red",
+        icon: <IconX size={18} />,
+        autoClose: false,
+      });
     }
   };
 
@@ -101,7 +121,6 @@ const ContactPage = () => {
     <>
       <h1 style={{ position: "absolute", left: "-9999px" }}>Spacemakers Contact Form</h1>
       <Container size="lg" py="xl">
-
         <Grid gutter="xl">
           {/* Left side with contact info */}
           <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
@@ -149,10 +168,6 @@ const ContactPage = () => {
               </a>
             </Group>
           </Grid.Col>
-          {/* 
-        <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
-          <Divider my="xl" size="lg" orientation='vertical' color='black' />
-        </Grid.Col> */}
 
           {/* Right side with form */}
           <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
@@ -237,6 +252,7 @@ const ContactPage = () => {
           </Grid.Col>
         </Grid>
       </Container>
+      <FooterSocial />
     </>
   );
 };
