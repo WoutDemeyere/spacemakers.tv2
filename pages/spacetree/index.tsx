@@ -46,15 +46,15 @@ const SpaceTree = () => {
   }, []);
 
   const buttons: ClipButton[] = [
-    { text: 'STROBE', layerIndex: 1, clipIndex: 1 },
-    { text: 'FIRE', layerIndex: 1, clipIndex: 2 },
-    { text: 'SNOW', layerIndex: 1, clipIndex: 3 },
-    { text: 'LINE X', layerIndex: 2, clipIndex: 1 },
-    { text: 'LINE Y', layerIndex: 2, clipIndex: 2 },
-    { text: 'LINE Z', layerIndex: 2, clipIndex: 3 },
-    { text: 'RED HUE', layerIndex: 3, clipIndex: 1 },
-    { text: 'CHASE', layerIndex: 3, clipIndex: 2 },
-    { text: 'PARTY', layerIndex: 3, clipIndex: 3 },
+    { text: 'STROBE', layerIndex: 3, clipIndex: 1 },
+    { text: 'FIRE', layerIndex: 3, clipIndex: 2 },
+    { text: 'SNOW', layerIndex: 3, clipIndex: 3 },
+    { text: 'LINE X', layerIndex: 3, clipIndex: 4 },
+    { text: 'LINE Y', layerIndex: 3, clipIndex: 5 },
+    { text: 'LINE Z', layerIndex: 3, clipIndex: 6 },
+    { text: 'RED HUE', layerIndex: 3, clipIndex: 7 },
+    { text: 'CHASE', layerIndex: 3, clipIndex: 8 },
+    { text: 'PARTY', layerIndex: 3, clipIndex: 9 },
   ];
 
   const executeRequest = (button: ClipButton) => {
