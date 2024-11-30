@@ -46,15 +46,15 @@ const SpaceTree = () => {
   }, []);
 
   const buttons: ClipButton[] = [
-    { text: 'STROBE', layerIndex: 3, clipIndex: 1 },
-    { text: 'FIRE', layerIndex: 3, clipIndex: 2 },
-    { text: 'SNOW', layerIndex: 3, clipIndex: 3 },
+    { text: 'WARM', layerIndex: 3, clipIndex: 1 },
+    { text: 'UNDER THE SEA', layerIndex: 3, clipIndex: 2 },
+    { text: 'RED', layerIndex: 3, clipIndex: 3 },
     { text: 'LINE X', layerIndex: 3, clipIndex: 4 },
-    { text: 'LINE Y', layerIndex: 3, clipIndex: 5 },
-    { text: 'LINE Z', layerIndex: 3, clipIndex: 6 },
-    { text: 'RED HUE', layerIndex: 3, clipIndex: 7 },
-    { text: 'CHASE', layerIndex: 3, clipIndex: 8 },
-    { text: 'PARTY', layerIndex: 3, clipIndex: 9 },
+    { text: 'SNOW', layerIndex: 3, clipIndex: 5 },
+    { text: 'PARTY', layerIndex: 3, clipIndex: 6 },
+    { text: 'LINE', layerIndex: 3, clipIndex: 7 },
+    { text: 'GRADIENT', layerIndex: 3, clipIndex: 8 },
+    { text: 'COLD', layerIndex: 3, clipIndex: 9 },
   ];
 
   const executeRequest = (button: ClipButton) => {
@@ -135,10 +135,10 @@ const SpaceTree = () => {
           </SimpleGrid>
 
 
-          <Flex direction="column" style={{ backgroundColor: 'black', color: 'black', padding: '30px', width: '100%' }}>
+          {/* <Flex direction="column" style={{ backgroundColor: 'black', color: 'black', padding: '30px', width: '100%' }}>
             <Text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' }}>BRIGHTNESS</Text>
             <Slider color="grey" value={sliderValue} onChange={setSliderValue} onChangeEnd={(value) => executeBrightnessRequest(value)} max={1} min={0} step={0.01} inverted />
-          </Flex>
+          </Flex> */}
         </Flex>
       </Center>
     </Container>
