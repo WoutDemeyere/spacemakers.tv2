@@ -1,7 +1,7 @@
 import { Head, Html, Main, NextScript } from 'next/document';
 import { ColorSchemeScript } from '@mantine/core';
 
-import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script';
 
 
 export default function Document() {
@@ -13,7 +13,18 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <GoogleAnalytics gaId="G-ZJRZBZBZHT" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-ZJRZBZBZHT"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-ZJRZBZBZHT');
+          `}
+        </Script>
       </body>
     </Html>
   );
