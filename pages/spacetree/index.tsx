@@ -47,7 +47,7 @@ const SpaceTree = () => {
 
   const buttons: ClipButton[] = [
     { text: 'WARM', layerIndex: 3, clipIndex: 1 },
-    { text: 'UNDER THE SEA', layerIndex: 3, clipIndex: 2 },
+    { text: 'SEA', layerIndex: 3, clipIndex: 2 },
     { text: 'RED', layerIndex: 3, clipIndex: 3 },
     { text: 'LINE X', layerIndex: 3, clipIndex: 4 },
     { text: 'SNOW', layerIndex: 3, clipIndex: 5 },
