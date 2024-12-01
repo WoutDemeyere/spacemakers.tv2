@@ -4,6 +4,7 @@ import { GetServerSideProps } from 'next';
 import { IconHelp } from '@tabler/icons-react';
 
 import styles from './spacetree.module.css';
+import { FooterSocial } from '@/components/FooterSocial/FooterSocial';
 
 const textStyle = {
   fontSize: '24px',
@@ -102,8 +103,9 @@ const SpaceTree = () => {
   };
 
   return (
-    <Container
-      id="space-tree-container"
+    <React.Fragment>
+      <Container
+        id="space-tree-container"
       size="lg"
       style={{ padding: 0, maxWidth: '100%', margin: '0', height: '100vh', backgroundColor: 'black' }}
     >
@@ -142,6 +144,8 @@ const SpaceTree = () => {
         </Flex>
       </Center>
     </Container>
+    <FooterSocial />
+    </React.Fragment>
   );
 };
 
