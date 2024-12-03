@@ -16,6 +16,9 @@ import { FooterSocial } from '@/components/FooterSocial/FooterSocial';
 
 import { v4 as uuidv4 } from 'uuid';
 
+import { useRouter } from 'next/router';
+
+
 const textStyle = {
   fontSize: '24px',
   fontWeight: 'bold',
@@ -46,6 +49,9 @@ const SpaceTree = () => {
 
   const userIdRef = useRef<string>(uuidv4());
   const socketRef = useRef<WebSocket | null>(null);
+
+  const router = useRouter();
+  const { dev } = router.query;
 
   useEffect(() => {
     const container = document.getElementById('space-tree-container');
@@ -217,23 +223,25 @@ const SpaceTree = () => {
               ))}
             </SimpleGrid>
 
-            <Button
-              onClick={startGyro}
-              disabled={isDisabled}
-              className={styles.spaceTreeButton}
-              style={{
-                width: '100%',
-                marginTop: '10px',
-                backgroundColor: 'white',
-                color: 'black',
-                borderRadius: 0,
-                padding: '20px',
-                fontSize: '18px',
-                fontWeight: 'bold',
-              }}
-            >
-              ENABLE GYRO CONTROL
-            </Button>
+            {dev === 'space' && (
+              <Button
+                onClick={startGyro}
+                disabled={isDisabled}
+                className={styles.spaceTreeButton}
+                style={{
+                  width: '100%',
+                  marginTop: '10px',
+                  backgroundColor: 'white',
+                  color: 'black',
+                  borderRadius: 0,
+                  padding: '20px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                }}
+              >
+                ENABLE GYRO CONTROL
+              </Button>
+            )}
           </Flex>
         </Center>
       </Container>
