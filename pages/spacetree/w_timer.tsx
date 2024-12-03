@@ -43,9 +43,23 @@ const HelpPopover = () => {
 
 const SpaceTree = () => {
   const [isDisabled, setIsDisabled] = useState(false);
+  const [gyroData, setGyroData] = useState<{
+    alpha: number | null;
+    beta: number | null;
+    gamma: number | null;
+  }>({ alpha: null, beta: null, gamma: null });
+
+  const [isGyroEnabled, setIsGyroEnabled] = useState(false);
+  const [isCooldown, setIsCooldown] = useState(false);
+  const [buttonColor, setButtonColor] = useState('white');
+  const [timer, setTimer] = useState<number>(0);
 
   const userIdRef = useRef<string>(uuidv4());
   const socketRef = useRef<WebSocket | null>(null);
+  const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
+
+  const GYRO_DURATION = 30; // in seconds
+  const COOLDOWN_DURATION = 10; // in seconds
 
   useEffect(() => {
     const container = document.getElementById('space-tree-container');
@@ -58,7 +72,9 @@ const SpaceTree = () => {
 
     // Initialize WebSocket
     if (typeof window !== 'undefined') {
-      const socket = new WebSocket('wss://spacetree-websocket-server-hidden-river-825.fly.dev');
+      const socket = new WebSocket(
+        'wss://spacetree-websocket-server-hidden-river-825.fly.dev'
+      );
 
       socket.onopen = () => {
         console.log('WebSocket connection established.');
@@ -70,10 +86,57 @@ const SpaceTree = () => {
 
       socketRef.current = socket;
 
+      // Check for existing gyro or cooldown state
+      const gyroEnabledUntil = localStorage.getItem('gyroEnabledUntil');
+      const gyroCooldownUntil = localStorage.getItem('gyroCooldownUntil');
+      const now = Date.now();
+
+      if (gyroEnabledUntil && parseInt(gyroEnabledUntil) > now) {
+        const remainingTime = Math.ceil(
+          (parseInt(gyroEnabledUntil) - now) / 1000
+        );
+        setIsGyroEnabled(true);
+        setButtonColor('green');
+        setTimer(remainingTime);
+        addDeviceOrientationListener();
+
+        // Set timeout to disable gyro when time is up
+        setTimeout(() => {
+          setIsDisabled(false); // Reset isDisabled here
+          setButtonColor('red');
+          window.removeEventListener('deviceorientation', handleOrientation);
+          localStorage.removeItem('gyroEnabledUntil');
+          startCooldown();
+        }, parseInt(gyroEnabledUntil) - now);
+
+        startTimer();
+      } else if (gyroCooldownUntil && parseInt(gyroCooldownUntil) > now) {
+        const remainingTime = Math.ceil(
+          (parseInt(gyroCooldownUntil) - now) / 1000
+        );
+        setIsCooldown(true);
+        setButtonColor('red');
+        setTimer(remainingTime);
+
+        // Set timeout to end cooldown
+        setTimeout(() => {
+          setIsGyroEnabled(false);
+          setIsCooldown(false);
+          setButtonColor('white');
+          setTimer(0);
+          localStorage.removeItem('gyroCooldownUntil');
+        }, parseInt(gyroCooldownUntil) - now);
+
+        startTimer();
+      }
+
       // Cleanup function
       return () => {
         if (socketRef.current) {
           socketRef.current.close();
+        }
+        if (intervalIdRef.current) {
+          clearInterval(intervalIdRef.current);
         }
         window.removeEventListener('deviceorientation', handleOrientation);
       };
@@ -89,7 +152,7 @@ const SpaceTree = () => {
         .requestPermission()
         .then((response: any) => {
           if (response === 'granted') {
-            window.addEventListener('deviceorientation', handleOrientation);
+            addDeviceOrientationListener();
           } else {
             alert('Zonder toestemming kan deze functie niet worden gebruikt.');
           }
@@ -100,13 +163,72 @@ const SpaceTree = () => {
         });
     } else {
       // For devices that do not require permission or do not support it
-      window.addEventListener('deviceorientation', handleOrientation);
+      addDeviceOrientationListener();
     }
   };
 
+  const addDeviceOrientationListener = () => {
+    window.addEventListener('deviceorientation', handleOrientation);
+  };
+
   const startGyro = () => {
-    executeRequest({ text: 'GYRO ENABLED', layerIndex: 3, clipIndex: 10 });
     askPermission();
+    setIsGyroEnabled(true);
+    setButtonColor('green');
+    setIsDisabled(true);
+
+    executeRequest({ text: 'GYRO ENABLED', layerIndex: 3, clipIndex: 10 });
+
+    const gyroEndTime = Date.now() + GYRO_DURATION * 1000;
+    localStorage.setItem('gyroEnabledUntil', gyroEndTime.toString());
+
+    setTimer(GYRO_DURATION);
+    startTimer();
+
+    setTimeout(() => {
+      setIsGyroEnabled(false);
+      setButtonColor('red');
+      window.removeEventListener('deviceorientation', handleOrientation);
+      localStorage.removeItem('gyroEnabledUntil');
+      startCooldown();
+    }, GYRO_DURATION * 1000);
+  };
+
+  const startCooldown = () => {
+    setIsCooldown(true);
+    setButtonColor('red');
+
+    const cooldownEndTime = Date.now() + COOLDOWN_DURATION * 1000;
+    localStorage.setItem('gyroCooldownUntil', cooldownEndTime.toString());
+
+    setTimer(COOLDOWN_DURATION);
+    startTimer();
+
+    setTimeout(() => {
+      setButtonColor('white');
+      setTimer(0);
+      setIsGyroEnabled(false);
+      setIsCooldown(false);
+      localStorage.removeItem('gyroCooldownUntil');
+    }, COOLDOWN_DURATION * 1000);
+  };
+
+  const startTimer = () => {
+    if (intervalIdRef.current) {
+      clearInterval(intervalIdRef.current);
+    }
+    intervalIdRef.current = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer > 1) {
+          return prevTimer - 1;
+        } else {
+          if (intervalIdRef.current) {
+            clearInterval(intervalIdRef.current);
+          }
+          return 0;
+        }
+      });
+    }, 1000);
   };
 
   // Function to handle orientation data
@@ -118,11 +240,14 @@ const SpaceTree = () => {
       gamma,
       userId: userIdRef.current,
     };
+    setGyroData({ alpha, beta, gamma });
 
     if (socketRef.current?.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify(data));
     }
   };
+
+  // Rest of your code...
 
   const buttons: ClipButton[] = [
     { text: 'WARM', layerIndex: 3, clipIndex: 1 },
@@ -147,7 +272,7 @@ const SpaceTree = () => {
       .then((response) => {
         if (!response.ok) {
           throw new Error(
-            `PI call returned ${response.status}: ${response.statusText}`
+            `API call returned ${response.status}: ${response.statusText}`
           );
         }
         return response.json();
@@ -209,7 +334,6 @@ const SpaceTree = () => {
                 <Button
                   key={index}
                   onClick={() => executeRequest(button)}
-                  disabled={isDisabled}
                   className={styles.spaceTreeButton}
                 >
                   {button.text}
@@ -218,21 +342,29 @@ const SpaceTree = () => {
             </SimpleGrid>
 
             <Button
-              onClick={startGyro}
-              disabled={isDisabled}
+              onClick={() => {
+                if (!isCooldown && !isGyroEnabled) {
+                  startGyro();
+                }
+              }}
+              // disabled={isDisabled || isCooldown || isGyroEnabled}
               className={styles.spaceTreeButton}
               style={{
                 width: '100%',
                 marginTop: '10px',
-                backgroundColor: 'white',
-                color: 'black',
+                backgroundColor: buttonColor,
+                color: buttonColor === 'white' ? 'black' : 'white',
                 borderRadius: 0,
                 padding: '20px',
                 fontSize: '18px',
                 fontWeight: 'bold',
               }}
             >
-              ENABLE GYRO CONTROL
+              {isGyroEnabled
+                ? `GYRO ENABLED (${timer}s)`
+                : isCooldown
+                ? `COOLDOWN (${timer}s)`
+                : 'GSM ROTATIE'}
             </Button>
           </Flex>
         </Center>

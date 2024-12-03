@@ -11,6 +11,7 @@ import HeaderMenu from "../components/HeaderMenu/HeaderMenu";
 
 import "@mantine/notifications/styles.css";
 import "../styles/globals.css";
+import Script from "next/dist/client/script";
 
 export default function App ({
   Component,
@@ -82,6 +83,19 @@ export default function App ({
           })}
         </script>
       </Head>
+      {/* Global Site Tag (gtag.js) - Google Analytics */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-XXXXXXXXXX');
+        `}
+      </Script>
       <HeaderMenu />
       <Component {...pageProps} projects={projects} tags={tags} />
     </MantineProvider>
