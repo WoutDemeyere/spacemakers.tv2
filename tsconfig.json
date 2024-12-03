@@ -15,7 +15,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "nodenext",
+    "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -34,7 +34,7 @@
       "./node_modules/@types",
       "./types"
     ],
-    "moduleResolution": "nodenext"
+    "moduleResolution": "node"
   },
   "include": [
     "**/*.ts",
