@@ -36,6 +36,7 @@
     "react-hook-gyroscope": "^1.1.12",
     "react-icons": "^5.3.0",
     "react-toastify": "^10.0.5",
+    "shake-detector": "^0.3.8",
     "swiper": "^11.1.14",
     "uuid": "^11.0.3",
     "uuid4": "^2.0.3"
