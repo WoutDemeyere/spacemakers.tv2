@@ -3,7 +3,7 @@ import { IconBrandInstagram, IconBrandFacebook, IconBrandLinkedin } from '@table
 import classes from './FooterSocial.module.css';
 import LogoWithText from '../LogoWithText/LogoWithText';
 
-export function FooterSocial() {
+export function FooterSocial (props: { volcke?: boolean }) {
   return (
     <div className={classes.footer}>
       <Container className={classes.inner}>
@@ -25,6 +25,12 @@ export function FooterSocial() {
             </ActionIcon>
           </a>
         </Group>
+        {props.volcke && (
+          <Container style={{ width: '100%', padding: '10px', display: 'flex', justifyContent: 'center' }}>
+            <Text>Met dank aan </Text>
+            <img src="/images/volcke.png" alt="Volcke" style={{ width: 'calc(100vw * 0.5)', filter: 'grayscale(100%)', marginLeft: '10px' }} />
+          </Container>
+        )}
       </Container>
     </div>
   );

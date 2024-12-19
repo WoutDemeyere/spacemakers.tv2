@@ -17,6 +17,7 @@ const links: LinkType[] = [
   { link: '/work', label: 'WORK' },
   { link: '/about', label: 'ABOUT' },
   { link: '/contact', label: 'CONTACT' },
+  { link: '/spacetree', label: 'SPACETREE' },
 ];
 
 const HeaderMenu = () => {

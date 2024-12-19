@@ -7,7 +7,6 @@ import {
   Flex,
   Center,
   Popover,
-  Stack,
   Switch,
 } from '@mantine/core';
 import { GetServerSideProps } from 'next';
@@ -16,11 +15,18 @@ import { IconHelp } from '@tabler/icons-react';
 import styles from './spacetree.module.css';
 import { FooterSocial } from '@/components/FooterSocial/FooterSocial';
 
-import { v4 as uuidv4 } from 'uuid';
 
 import { useRouter } from 'next/router';
 import ShakeDetector from 'shake-detector';
+import GyroControl from '@/components/GyroControl';
+import ShakeControl from '@/components/ShakeControl';
+// import SpaceTreeCanvas from '@/components/Canvas/index';
 
+import dynamic from 'next/dynamic';
+
+const SpaceTreeCanvas = dynamic(() => import('@/components/Canvas/index'), {
+  ssr: false,
+});
 
 
 const textStyle = {
@@ -29,7 +35,7 @@ const textStyle = {
   letterSpacing: '0.5px',
 };
 
-type ClipButton = {
+export type ClipButton = {
   text: string;
   layerIndex: number;
   clipIndex: number;
@@ -49,148 +55,22 @@ const HelpPopover = () => {
 };
 
 const SpaceTree = () => {
-  const [permissionGranted, setPermissionGranted] = useState(false);
-
-
-  const userIdRef = useRef<string>(uuidv4());
-  const socketRef = useRef<WebSocket | null>(null);
 
   const router = useRouter();
   const { dev } = router.query;
 
-  const [isGyroEnabled, setIsGyroEnabled] = useState(false);
-  const [isShakeEnabled, setIsShakeEnabled] = useState(false);
+  // useEffect(() => {
+  //   const container = document.getElementById('space-tree-container');
+  //   if (container) {
+  //     container.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'start',
+  //     });
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const container = document.getElementById('space-tree-container');
-    if (container) {
-      container.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-
-    // Cleanup function
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.close();
-      }
-      window.removeEventListener('deviceorientation', handleOrientation);
-    };
-  }, []);
-
-  const initWebSocket = () => {
-    // Initialize WebSocket
-    if (typeof window !== 'undefined') {
-      const socket = new WebSocket('wss://spacetree-websocket-server-hidden-river-825.fly.dev');
-
-      socket.onopen = () => {
-        console.log('WebSocket connection established.');
-      };
-
-      socket.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
-
-      // socket.onclose = () => {
-      //   console.log('WebSocket connection closed.');
-      //   if (isGyroEnabled) {
-      //     alert('Only one connection at a time is allowed, try again later.')
-      //     setIsGyroEnabled(false);
-      //     window.removeEventListener('deviceorientation', handleOrientation);
-      //   }
-      // };
-
-      socketRef.current = socket;
-    }
-  }
-
-  useEffect(() => {
-    if (isGyroEnabled) {
-      initWebSocket();
-      askPermission();
-      executeRequest({ text: 'GYRO ENABLED', layerIndex: 3, clipIndex: 10 });
-    } else {
-      if (socketRef.current) {
-        socketRef.current.close();
-      }
-    }
-  }, [isGyroEnabled]);
-
-  useEffect(() => {
-    console.log('isShakeEnabled', isShakeEnabled);
-    if (isShakeEnabled) {
-      askPermission();
-    }
-  }, [isShakeEnabled]);
-
-  const initShake = () => {
-    const options = {
-      threshold: 10,
-      debounceDelay: 1500,
-    };
-
-    const shakeDetector = new ShakeDetector(options).confirmPermissionGranted().subscribe(onShake).start();
-    setIsShakeEnabled(shakeDetector !== null);
-  }
-
-  const onShake = () => {
-    console.log('shake event');
-    if (isShakeEnabled) {
-      executeRequest({ text: 'SHAKE', layerIndex: 4, clipIndex: 1 });
-    }
-  }
-
-  const askPermission = () => {
-
-    // if (permissionGranted) {
-    //   // Permission already granted, no need to ask again
-    //   return;
-    // }
-
-    if (
-      typeof DeviceMotionEvent !== 'undefined' &&
-      typeof (DeviceMotionEvent as any).requestPermission === 'function'
-    ) {
-      (DeviceMotionEvent as any)
-        .requestPermission()
-        .then((response: any) => {
-          console.log('permission response', response);
-          if (response === 'granted') {
-            initShake();
-            setPermissionGranted(true); // Update state to reflect permission granted
-
-            window.addEventListener('deviceorientation', handleOrientation);
-          } else {
-            alert('Zonder toestemming kan deze functie niet worden gebruikt, herstart de browser om opnieuw te proberen.');
-          }
-        })
-        .catch((error: any) => {
-          console.error(error);
-          alert('Er is een fout opgetreden bij het aanvragen van toestemming.');
-        });
-    } else {
-      // For devices that do not require permission or do not support it
-      setPermissionGranted(true);
-      initShake();
-      window.addEventListener('deviceorientation', handleOrientation);
-    }
-  };
 
   // Function to handle orientation data
-  const handleOrientation = (event: DeviceOrientationEvent) => {
-    const { alpha, beta, gamma } = event;
-    const data = {
-      alpha,
-      beta,
-      gamma,
-      userId: userIdRef.current,
-    };
-
-    if (socketRef.current?.readyState === WebSocket.OPEN) {
-      socketRef.current.send(JSON.stringify(data));
-    }
-  };
 
   const buttons: ClipButton[] = [
     { text: 'WARM', layerIndex: 3, clipIndex: 1 },
@@ -230,7 +110,6 @@ const SpaceTree = () => {
 
   const buttonClick = (button: ClipButton) => {
     executeRequest(button);
-    setIsGyroEnabled(false);
   };
 
   return (
@@ -291,44 +170,15 @@ const SpaceTree = () => {
 
             {dev === 'space' && (
               <>
-                <Button
-                  onClick={() => setIsGyroEnabled(!isGyroEnabled)}
-                  className={styles.spaceTreeButton}
-                  style={{
-                    width: '100%',
-                    marginTop: '10px',
-                    backgroundColor: isGyroEnabled ? 'green' : 'white',
-                    color: isGyroEnabled ? 'white' : 'black',
-                    borderRadius: 0,
-                    padding: isGyroEnabled ? '5px' : '20px',
-                    fontSize: '18px',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {isGyroEnabled ? (
-                    <Stack>
-                      <Text fw={700}>GSM ROTATIE ACTIEF</Text>
-                      <Text fw={400} size="xs">Druk nogmaals om te stoppen</Text>
-                    </Stack>
-                  ) : (<Text fw={700}>GSM ROTATIE</Text>)}
-                </Button>
-
-                <Switch
-                  color='blue'
-                  style={{ margin: '15px', color: 'white' }}
-                  label="ENABLE SHAKE TO TRIGGER"
-                  checked={isShakeEnabled}
-                  onChange={() => setIsShakeEnabled(!isShakeEnabled)}
-                />
+                <GyroControl executeRequest={executeRequest} />
+                <ShakeControl executeRequest={executeRequest} />
+                <SpaceTreeCanvas executeRequest={executeRequest}/>
               </>
-
             )}
-
-
           </Flex>
         </Center>
       </Container>
-      <FooterSocial />
+      <FooterSocial volcke={false} />
     </React.Fragment>
   );
 };
