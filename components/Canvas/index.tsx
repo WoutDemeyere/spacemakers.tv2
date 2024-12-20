@@ -303,7 +303,7 @@ const SpaceTreeCanvas: React.FC<{ executeRequest: (request: ClipButton) => void 
     const button: ClipButton = {
       text: 'CANVAS',
       layerIndex: 3,
-      clipIndex: 10
+      clipIndex: 11
     }
     props.executeRequest(button);
     setIsFullScreen(true);
