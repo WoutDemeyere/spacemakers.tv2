@@ -45,7 +45,8 @@ const GyroControl: React.FC<GyroControlProps> = ({ executeRequest }) => {
   const initWebSocket = () => {
     // Initialize WebSocket
     if (typeof window !== 'undefined') {
-      const socket = new WebSocket('wss://spacetree-websocket-server-hidden-river-825.fly.dev');
+      // const socket = new WebSocket('wss://spacetree-websocket-server-hidden-river-825.fly.dev');
+      const socket = new WebSocket('wss://spacetree-websocket-server-v2.fly.dev');
 
       socket.onopen = () => {
         console.log('WebSocket connection established.');

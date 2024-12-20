@@ -49,7 +49,7 @@ class CanvasManager {
 
   initWebSocket () {
     // this.socket = new WebSocket(`ws://${window.location.hostname}:8088`);
-    this.socket = new WebSocket('wss://spacetree-websocket-server-hidden-river-825.fly.dev');
+    this.socket = new WebSocket('wss://spacetree-websocket-server-v2.fly.dev');
     this.socket.onopen = () => {
       console.log('WebSocket connection for canvas established.');
     };
