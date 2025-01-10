@@ -77,16 +77,18 @@ const GyroControl: React.FC<GyroControlProps> = ({ executeRequest }) => {
 
   const handleOrientation = (event: DeviceOrientationEvent) => {
     const { alpha, beta, gamma } = event;
-    const data = {
-      alpha,
-      beta,
-      gamma,
-      userId: userIdRef.current,
+    const message = {
+      data: {
+        alpha,
+        beta,
+        gamma,
+        userId: userIdRef.current,
+      },
       type: 'gyro'
-    };
+    }
 
     if (socketRef.current?.readyState === WebSocket.OPEN) {
-      socketRef.current.send(JSON.stringify(data));
+      socketRef.current.send(JSON.stringify(message));
     }
   };
 
