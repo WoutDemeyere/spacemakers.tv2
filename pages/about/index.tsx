@@ -14,7 +14,7 @@ const About = () => {
           <h3>THIS IS</h3>
           <h2>SPACEMAKERS</h2>
           <img src="/images/logo_no_text2.png" alt="logo" />
-          <img src="/images/qr_space.png" alt="logo" style={{ width: "300px", height: "300px", marginTop: "100px", marginLeft: "100px" }} />
+          <img src="/images/qr_space.png" alt="logo" style={{ width: "300px", height: "300px", marginTop: "20px", marginLeft: "100px" }} />
         </Container>
         <Container className={styles.about_text_container}>
           <Container className={styles.about_text}>
