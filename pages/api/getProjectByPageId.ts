@@ -9,7 +9,11 @@ const pb = new PocketBase(baseUrl);
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query; // Extract project ID from query parameters
 
-  const record = await pb.collection('projects').getFirstListItem(`page_id=${id}`, {});
+  console.log("id: ", id)
+
+  const record = await pb.collection('projects').getFirstListItem(`page_id="${id}"`, {});
+
+  console.log('record: ', record)
 
   try {
 

@@ -24,8 +24,8 @@ const Gallery = ({ projects, selectedTags }: GalleryProps) => {
 
   const handleOpen = (project: ProjectType) => {
     router.push({
-      pathname: `/work/${project.id}`,
-      query: { project: JSON.stringify(project) },
+      pathname: `/work/${project.page_id}`,
+      // query: { project: JSON.stringify(project) },
     });
   };
 

@@ -59,6 +59,14 @@
 	height: auto;
 }
 
+.modal_video {
+	margin-bottom: var(--global-whitespace-md);
+	width: 100%;
+  height: 450px;
+	object-fit: cover;
+	height: auto;
+}
+
 .modal_img:last-child {
 	margin: 0;
 }
@@ -75,6 +83,7 @@
 	}
 	.modal_container {
 		flex-direction: column;
+    overflow-y: scroll;
 	}
 
 	.modal_text_container {
@@ -89,6 +98,7 @@
 	}
 
 	.modal_images_container {
+    position: relative;
 		flex-direction: row;
 		height: 100%;
 		width: 100%;
@@ -104,6 +114,12 @@
 		/* height: 100%; */
 		/* width: auto; */
 		/* width: 60%; */
+	}
+
+  .modal_img {
+		margin-right: var(--global-whitespace-sm);
+		width: 90%;
+		height: 450px;
 	}
 }
 
@@ -129,6 +145,7 @@
 /* Styles for video elements */
 .modal_video {
 	width: 100%;
+  height: 450px;
 	object-fit: cover;
 	margin-bottom: var(--global-whitespace-md);
 }
@@ -138,7 +155,7 @@
 }
 
 /* Update these media queries to handle video sizing on smaller screens */
-@media only screen and (max-width: 1200px) {
+/* @media only screen and (max-width: 1200px) {
 	.modal_video {
 		width: 90%;
 	}
@@ -146,7 +163,7 @@
 	.modal_video.portrait {
 		width: 45%;
 	}
-}
+} */
 
 @media only screen and (max-width: 768px) {
 	.modal_video {

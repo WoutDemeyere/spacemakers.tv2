@@ -39,9 +39,9 @@ const Work = (props: WorkProps) => {
           project.images = project.images?.map(
             (image: string) => `${baseUrl}/api/files/${project.collectionId}/${project.id}/${image}`
           );
-          project.videos = project.videos?.map(
-            (video: string) => `${baseUrl}/api/files/${project.collectionId}/${project.id}/${video}`
-          );
+          // project.videos = project.videos?.map(
+          //   (video: string) => `${baseUrl}/api/files/${project.collectionId}/${project.id}/${video}`
+          // );
           return project;
         });
 

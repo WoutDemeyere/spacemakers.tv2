@@ -222,7 +222,7 @@ const ContactPage = () => {
                   />
                 </Grid.Col>
                 <Grid.Col span={12}>
-                  <Button type="submit" fullWidth>
+                  <Button type="submit" fullWidth style={{background: 'black'}}>
                     Send
                   </Button>
                 </Grid.Col>

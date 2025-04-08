@@ -6,6 +6,8 @@ import parse from "html-react-parser";
 import styles from "./project.module.css";
 
 import { Carousel } from '@mantine/carousel';
+import { API_BASE_URL } from '../../config/vars';
+
 
 import type { ProjectType } from "@/types/types";
 interface PageProps {
@@ -22,8 +24,12 @@ export default function Page (props: PageProps) {
   useEffect(() => {
     const fetchProject = async (id: string) => {
       try {
-        const response = await fetch(`/api/getProjectById?id=${id}`);
+        const response = await fetch(`/api/getProjectByPageId?id=${id}`);
         const data = await response.json();
+
+        if (data.video_links) {
+          data.videos = data.video_links.split(',').map((link: string) => link.trim());
+        }
         setProject(data);
       } catch (error) {
         console.error("Error fetching project:", error);
@@ -49,12 +55,30 @@ export default function Page (props: PageProps) {
     router.push("/work");
   };
 
+  const renderVideos = () => {
+    return project.videos.map((video, index) => (
+      <Carousel.Slide key={index}>
+      <iframe
+        key={index}
+        src={video.replace("watch?v=", "embed/")}
+        className={styles.modal_video}
+
+        // style={{ position: 'relative', height: '450px', width: '90%' }}
+        allowFullScreen
+        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'>
+      </iframe>
+      </Carousel.Slide>
+    ));
+  }
+
+  console.log("videos: ", project.videos)
+
   const renderImages = () => {
     return project.images.map((image, index) => (
       image && (
         <Carousel.Slide key={index}>
           <img
-            src={image}
+            src={`${API_BASE_URL}/api/files/${project.collectionId}/${project.id}/${image}`}
             alt={project.title}
             className={styles.modal_img}
           />
@@ -69,28 +93,19 @@ export default function Page (props: PageProps) {
         <FiArrowLeft className={styles.back_button} onClick={handleBack} />
         <div className={styles.modal_text_container}>
           <h1 className={styles.modal_title}>{project.title}</h1>
-          <p className={styles.modal_description}>
+          <div className={styles.modal_description} style={{ textAlign: "justify", marginRight: '60px' }}>
             {parse(project.content)}
-          </p>
+          </div>
+
+
         </div>
-
         <div className={styles.modal_images_container}>
-          {/* {project.video_links.length !== 0 &&
-            project.video_links.map((video, index) => (
-              <video
-                key={index}
-                src={video}
-                className={styles.modal_video}
-                controls
-              />
-            ))} */}
-
-          <Carousel >
+          <Carousel withIndicators={false}>
+            {project.videos.length !== 0 && renderVideos()}
             {renderImages()}
           </Carousel>
-
         </div>
       </div>
     </Container>
-  );
+  )
 }
