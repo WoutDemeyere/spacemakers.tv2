@@ -60,7 +60,7 @@ export default function Page (props: PageProps) {
       <Carousel.Slide key={index}>
       <iframe
         key={index}
-        src={video.replace("watch?v=", "embed/")}
+        src={video.replace("watch?v=", "embed/").replace("shorts/", "embed/")}
         className={styles.modal_video}
 
         // style={{ position: 'relative', height: '450px', width: '90%' }}
