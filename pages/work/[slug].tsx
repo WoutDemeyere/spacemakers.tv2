@@ -29,6 +29,8 @@ export default function Page (props: PageProps) {
 
         if (data.video_links) {
           data.videos = data.video_links.split(',').map((link: string) => link.trim());
+        } else {
+          data.videos = [];
         }
         setProject(data);
       } catch (error) {
@@ -56,7 +58,7 @@ export default function Page (props: PageProps) {
   };
 
   const renderVideos = () => {
-    return project.videos.map((video, index) => (
+    return project.videos ? project.videos.map((video, index) => (
       <Carousel.Slide key={index}>
       <iframe
         key={index}
@@ -68,7 +70,7 @@ export default function Page (props: PageProps) {
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'>
       </iframe>
       </Carousel.Slide>
-    ));
+    )) : null;
   }
 
   console.log("videos: ", project.videos)
@@ -101,7 +103,7 @@ export default function Page (props: PageProps) {
         </div>
         <div className={styles.modal_images_container}>
           <Carousel withIndicators={false}>
-            {project.videos.length !== 0 && renderVideos()}
+            {project.videos && project.videos.length !== 0 && renderVideos()}
             {renderImages()}
           </Carousel>
         </div>
